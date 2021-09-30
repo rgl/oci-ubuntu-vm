@@ -180,7 +180,18 @@ resource "oci_core_internet_gateway" "example" {
   display_name = "example"
 }
 
+# NB cloud-init executes **all** these parts regardless of their result. they
+#    should be idempotent.
 data "template_cloudinit_config" "app" {
+  part {
+    content_type = "text/cloud-config"
+    content = <<-EOF
+    #cloud-config
+    package_update: true
+    package_upgrade: true
+    package_reboot_if_required: true
+    EOF
+  }
   part {
     content_type = "text/x-shellscript"
     content = file("provision-app.sh")
