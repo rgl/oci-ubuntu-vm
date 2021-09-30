@@ -51,19 +51,21 @@ make terraform-apply
 
 At VM initialization time [cloud-init](https://cloudinit.readthedocs.io/en/latest/index.html) will run the `provision-app.sh` script to launch the example application.
 
-After cloud-init finishes the VM initialization, test the `app` endpoint:
+Wait for `cloud-init` to finish:
+
+```bash
+ssh "ubuntu@$(terraform output -raw vm_ip_address)" cloud-init status --wait --long
+```
+
+**NB** The `cloud-init` logs are at `/var/log/cloud-init-output.log`.
+
+Test the `app` endpoint:
 
 ```bash
 wget -qO- "http://$(terraform output -raw vm_ip_address)/test"
 ```
 
-And open a shell inside the VM:
-
-```bash
-ssh "ubuntu@$(terraform output -raw vm_ip_address)"
-```
-
-You can also connect to the VM serial console:
+Connect to the VM serial console:
 
 **NB** the console requires login, which means you must have previously set the
 ubuntu user password (by default it does not have a password; only ssh
@@ -80,8 +82,8 @@ You can also connect to the VNC console of the VM:
 ```bash
 # NB the ssh command is alike:
 #       ssh -o ProxyCommand='ssh -W %h:%p -p 443 ocid1.instanceconsoleconnection.oc1.eu-amsterdam-1.<id1>@instance-console.eu-amsterdam-1.oci.oraclecloud.com'-N -L localhost:5900:ocid1.instance.oc1.eu-amsterdam-1.<id2>:5900 ocid1.instance.oc1.eu-amsterdam-1.<id2>
-bash -c "$(terraform output -raw vm_vnc_console_ssh_command)" # start the tunnel in background.
-vinagre localhost:5900 # open a VNC connection tru the local tunnel. you should run this in another shell.
+bash -c "$(terraform output -raw vm_vnc_console_ssh_command)" & # start the tunnel in background.
+vinagre localhost:5900 # open a VNC connection tru the local tunnel.
 ```
 
 Destroy everything:
