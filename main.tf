@@ -44,11 +44,11 @@ variable "vm_type" {
     shape = "VM.Standard.E2.1.Micro"
     ocpus = 1
     memory_in_gbs = 1
-    # use Canonical-Ubuntu-20.04-2021.08.26-0
+    # use Canonical-Ubuntu-20.04-2021.09.22-0
     # NB the image id depends on the region.
     # NB see https://docs.oracle.com/en-us/iaas/images/ubuntu-2004/
-    # NB see https://docs.oracle.com/en-us/iaas/images/image/8cb3f045-8b92-474a-93b4-70d7d148545b/
-    image = "ocid1.image.oc1.eu-amsterdam-1.aaaaaaaa45hjmkw2foqur36ezxa5iyb7kmkth6hyhhmyjk4kmwn43cyxdb6a"
+    # NB see https://docs.oracle.com/en-us/iaas/images/image/6013e506-ed35-4487-a3f7-122efbbbc6ad/
+    image = "ocid1.image.oc1.eu-amsterdam-1.aaaaaaaahlpp6o3h3eqgyggmcf3rq5yiri7uw36f5f56hp5qktfxvt6kzesa"
   }
   # # VM.Standard.A1.Flex: 1-16 OCPU. 1-24 GB RAM.
   # # NB This shape is always free-eligible.
@@ -56,11 +56,11 @@ variable "vm_type" {
   #   shape = "VM.Standard.A1.Flex"
   #   ocpus = 16
   #   memory_in_gbs = 24
-  #   # use Canonical-Ubuntu-20.04-aarch64-2021.08.26-0
+  #   # use Canonical-Ubuntu-20.04-aarch64-2021.09.22-0
   #   # NB the image id depends on the region.
   #   # NB see https://docs.oracle.com/en-us/iaas/images/ubuntu-2004/
-  #   # NB see https://docs.oracle.com/en-us/iaas/images/image/51111a15-54e5-4af7-adb9-cea542248147/
-  #   image = "ocid1.image.oc1.eu-amsterdam-1.aaaaaaaa22ksnqcyaeojdztiwgdfg6ev2bawmbe76llj5zllybjjphob6y2a"
+  #   # NB see https://docs.oracle.com/en-us/iaas/images/image/c186957d-5932-47ab-9060-8f7726f40da8/
+  #   image = "ocid1.image.oc1.eu-amsterdam-1.aaaaaaaaeyjxu6kaw5eko2erras3enzceixuenwvd7phw3cnfycf2sh4miba"
   # }
 }
 
