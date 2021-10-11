@@ -54,7 +54,7 @@ At VM initialization time [cloud-init](https://cloudinit.readthedocs.io/en/lates
 Wait for `cloud-init` to finish:
 
 ```bash
-ssh "ubuntu@$(terraform output -raw vm_ip_address)" cloud-init status --wait --long
+while ! ssh "ubuntu@$(terraform output -raw vm_ip_address)" cloud-init status --wait --long; do sleep 5; done
 ```
 
 **NB** The `cloud-init` logs are at `/var/log/cloud-init-output.log`.
