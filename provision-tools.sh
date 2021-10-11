@@ -6,8 +6,8 @@ sudo apt-get install -y unzip jq
 
 # install terraform.
 # see https://www.terraform.io/downloads.html
-artifact_url=https://releases.hashicorp.com/terraform/1.0.7/terraform_1.0.7_linux_amd64.zip
-artifact_sha=bc79e47649e2529049a356f9e60e06b47462bf6743534a10a4c16594f443be7b
+artifact_url=https://releases.hashicorp.com/terraform/1.0.8/terraform_1.0.8_linux_amd64.zip
+artifact_sha=a73459d406067ce40a46f026dce610740d368c3b4a3d96591b10c7a577984c2e
 artifact_path="/tmp/$(basename $artifact_url)"
 wget -qO $artifact_path $artifact_url
 if [ "$(sha256sum $artifact_path | awk '{print $1}')" != "$artifact_sha" ]; then
