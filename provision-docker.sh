@@ -2,7 +2,7 @@
 set -euxo pipefail
 
 # NB execute apt-cache madison docker-ce to known the available versions.
-docker_version="${1:-20.10.8}"; shift || true
+docker_version="${1:-20.10.9}"; shift || true
 
 # prevent apt-get et al from asking questions.
 # NB even with this, you'll still get some warnings that you can ignore:
