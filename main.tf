@@ -11,7 +11,7 @@ terraform {
     # see https://github.com/terraform-providers/terraform-provider-oci
     oci = {
       source = "hashicorp/oci"
-      version = "4.45.0"
+      version = "4.47.0"
     }
   }
 }
