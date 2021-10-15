@@ -13,7 +13,7 @@ export DEBIAN_FRONTEND=noninteractive
 # see https://docs.docker.com/engine/install/ubuntu/
 apt-get install -y apt-transport-https software-properties-common
 wget -qO- https://download.docker.com/linux/ubuntu/gpg | apt-key add -
-add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+add-apt-repository "deb [arch=$(dpkg --print-architecture)] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 docker_apt_version="$(apt-cache madison docker-ce | awk "/$docker_version~/{print \$3}")"
 apt-get install -y "docker-ce=$docker_apt_version" "docker-ce-cli=$docker_apt_version" containerd.io
 
