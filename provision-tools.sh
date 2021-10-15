@@ -38,7 +38,7 @@ CHECKPOINT_DISABLE=1 terraform version
 #       $HOME/bin/oci-cli-scripts
 #    and modifies your bashrc to include bin in the PATH and bash completions.
 # NB you have to restart your shell session.
-oci_cli_version=3.1.1
+oci_cli_version=3.1.2
 wget -qOinstall-oci-cli.sh https://raw.githubusercontent.com/oracle/oci-cli/v$oci_cli_version/scripts/install/install.sh
 bash install-oci-cli.sh \
     --oci-cli-version $oci_cli_version \
