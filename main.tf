@@ -50,11 +50,11 @@ variable "vm_type" {
     # NB see https://docs.oracle.com/en-us/iaas/images/image/6013e506-ed35-4487-a3f7-122efbbbc6ad/
     image = "ocid1.image.oc1.eu-amsterdam-1.aaaaaaaahlpp6o3h3eqgyggmcf3rq5yiri7uw36f5f56hp5qktfxvt6kzesa"
   }
-  # # VM.Standard.A1.Flex: 1-16 OCPU. 1-24 GB RAM.
-  # # NB This shape is always free-eligible.
+  # # VM.Standard.A1.Flex: 1-4 OCPU. 1-24 GB RAM.
+  # # NB This shape is always free-eligible (up to 4 OCPU and 24 GB RAM).
   # default = {
   #   shape = "VM.Standard.A1.Flex"
-  #   ocpus = 16
+  #   ocpus = 4
   #   memory_in_gbs = 24
   #   # use Canonical-Ubuntu-20.04-aarch64-2021.09.22-0
   #   # NB the image id depends on the region.
