@@ -194,6 +194,10 @@ data "template_cloudinit_config" "app" {
   }
   part {
     content_type = "text/x-shellscript"
+    content = file("provision-base.sh")
+  }
+  part {
+    content_type = "text/x-shellscript"
     content = file("provision-docker.sh")
   }
   part {
