@@ -196,11 +196,21 @@ data "template_cloudinit_config" "app" {
     package_update: true
     package_upgrade: true
     package_reboot_if_required: true
+    # NB it seems lxd and docker iptables rules are racing/conflicting with
+    #    each other. they generally fubar when the lxd iptables rules end-up
+    #    after the docker ones. rebooting seems to fix it.
+    power_state:
+      mode: reboot
+      condition: true
     EOF
   }
   part {
     content_type = "text/x-shellscript"
     content = file("provision-base.sh")
+  }
+  part {
+    content_type = "text/x-shellscript"
+    content = file("provision-lxd.sh")
   }
   part {
     content_type = "text/x-shellscript"

@@ -86,6 +86,27 @@ bash -c "$(terraform output -raw vm_vnc_console_ssh_command)" & # start the tunn
 vinagre localhost:5900 # open a VNC connection tru the local tunnel.
 ```
 
+Connect to the VM and start a Debian LXC system container:
+
+```bash
+ssh "ubuntu@$(terraform output -raw vm_ip_address)" # enter the VM.
+snap list lxd # show the lxd package version.
+journalctl -u snap.lxd.daemon.service # show lxd logs.
+lxc launch images:debian/11 debian # start the container.
+lxc exec debian -- bash # enter the container.
+lscpu
+# NB if the container does not obtain an IP address from lxd managed dnsmasq
+#    DHCP server, try to reboot the host. it seems lxd/docker iptables rules
+#    are racing/conflicting with each other. it generally fubars when the
+#    lxd iptables rules are after the docker ones.
+#    NB we already workround this by configuring cloud-init to reboot the
+#       system, so the above problem should not occur anymore.
+ping -c 3 debian.org
+exit # exit the container.
+lxc delete debian --force # destroy the container.
+exit # exit the VM.
+```
+
 Destroy everything:
 
 ```bash

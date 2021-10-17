@@ -40,6 +40,13 @@ set completion-ignore-case on
 "\eOC": forward-word
 EOF
 
+cat >~/.bash_history <<'EOF'
+lxc list
+lxc launch images:debian/11 debian
+lxc exec debian -- bash
+lxc delete debian --force
+EOF
+
 # configure the ubuntu user home.
 su ubuntu -c bash <<'EOF'
 set -euxo pipefail
