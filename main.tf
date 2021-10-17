@@ -36,6 +36,7 @@ variable "vm_type" {
     shape = string
     ocpus = number
     memory_in_gbs = number
+    boot_volume_size_gbs = number
     image = string
   })
   # VM.Standard.E2.1.Micro: 1 OCPU. 1 GB RAM.
@@ -44,6 +45,7 @@ variable "vm_type" {
     shape = "VM.Standard.E2.1.Micro"
     ocpus = 1
     memory_in_gbs = 1
+    boot_volume_size_gbs = 50 # NB min is 50.
     # use Canonical-Ubuntu-20.04-2021.09.22-0
     # NB the image id depends on the region.
     # NB see https://docs.oracle.com/en-us/iaas/images/ubuntu-2004/
@@ -56,6 +58,7 @@ variable "vm_type" {
   #   shape = "VM.Standard.A1.Flex"
   #   ocpus = 4
   #   memory_in_gbs = 24
+  #   boot_volume_size_gbs = 50 # NB min is 50.
   #   # use Canonical-Ubuntu-20.04-aarch64-2021.09.22-0
   #   # NB the image id depends on the region.
   #   # NB see https://docs.oracle.com/en-us/iaas/images/ubuntu-2004/
@@ -234,6 +237,7 @@ resource "oci_core_instance" "example" {
   source_details {
     source_type = "image"
     source_id = var.vm_type.image
+    boot_volume_size_in_gbs = var.vm_type.boot_volume_size_gbs
   }
 
   metadata = {
