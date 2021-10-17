@@ -37,6 +37,7 @@ variable "vm_type" {
     ocpus = number
     memory_in_gbs = number
     boot_volume_size_gbs = number
+    data_volume_size_gbs = number
     image = string
   })
   # VM.Standard.E2.1.Micro: 1 OCPU. 1 GB RAM.
@@ -46,6 +47,7 @@ variable "vm_type" {
     ocpus = 1
     memory_in_gbs = 1
     boot_volume_size_gbs = 50 # NB min is 50.
+    data_volume_size_gbs = 50 # NB min is 50.
     # use Canonical-Ubuntu-20.04-2021.09.22-0
     # NB the image id depends on the region.
     # NB see https://docs.oracle.com/en-us/iaas/images/ubuntu-2004/
@@ -59,6 +61,7 @@ variable "vm_type" {
   #   ocpus = 4
   #   memory_in_gbs = 24
   #   boot_volume_size_gbs = 50 # NB min is 50.
+  #   data_volume_size_gbs = 50 # NB min is 50.
   #   # use Canonical-Ubuntu-20.04-aarch64-2021.09.22-0
   #   # NB the image id depends on the region.
   #   # NB see https://docs.oracle.com/en-us/iaas/images/ubuntu-2004/
@@ -211,6 +214,23 @@ data "template_cloudinit_config" "app" {
     content_type = "text/x-shellscript"
     content = file("provision-app.sh")
   }
+}
+
+# see https://registry.terraform.io/providers/hashicorp/oci/latest/docs/resources/core_volume
+resource "oci_core_volume" "example" {
+  compartment_id = oci_core_instance.example.compartment_id
+  availability_domain = oci_core_instance.example.availability_domain
+  size_in_gbs = var.vm_type.data_volume_size_gbs
+  display_name = "data"
+}
+
+# see https://registry.terraform.io/providers/hashicorp/oci/latest/docs/resources/core_volume_attachment
+# see Connecting to Volumes With Consistent Device Paths at https://docs.oracle.com/en-us/iaas/Content/Block/References/consistentdevicepaths.htm
+resource "oci_core_volume_attachment" "example" {
+  attachment_type = "paravirtualized"
+  instance_id = oci_core_instance.example.id
+  volume_id = oci_core_volume.example.id
+  device = "/dev/oracleoci/oraclevdb"
 }
 
 # see https://registry.terraform.io/providers/hashicorp/oci/latest/docs/resources/core_instance
