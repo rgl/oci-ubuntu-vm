@@ -99,7 +99,7 @@ lscpu
 #    DHCP server, try to reboot the host. it seems lxd/docker iptables rules
 #    are racing/conflicting with each other. it generally fubars when the
 #    lxd iptables rules are after the docker ones.
-#    NB we already workround this by configuring cloud-init to reboot the
+#    NB we already workaround this by configuring cloud-init to reboot the
 #       system, so the above problem should not occur anymore.
 ping -c 3 debian.org
 exit # exit the container.

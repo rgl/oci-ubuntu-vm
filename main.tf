@@ -7,11 +7,11 @@ terraform {
       source = "hashicorp/template"
       version = "2.2.0"
     }
-    # see https://registry.terraform.io/providers/hashicorp/oci
-    # see https://github.com/terraform-providers/terraform-provider-oci
+    # see https://registry.terraform.io/providers/oracle/oci
+    # see https://github.com/oracle/terraform-provider-oci
     oci = {
-      source = "hashicorp/oci"
-      version = "4.48.0"
+      source = "oracle/oci"
+      version = "4.104.2"
     }
   }
 }
