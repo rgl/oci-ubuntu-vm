@@ -48,11 +48,11 @@ variable "vm_type" {
     memory_in_gbs = 1
     boot_volume_size_gbs = 50 # NB min is 50.
     data_volume_size_gbs = 50 # NB min is 50.
-    # use Canonical-Ubuntu-20.04-2021.09.22-0
+    # use Canonical-Ubuntu-22.04-Minimal-2022.11.05-0
     # NB the image id depends on the region.
-    # NB see https://docs.oracle.com/en-us/iaas/images/ubuntu-2004/
-    # NB see https://docs.oracle.com/en-us/iaas/images/image/6013e506-ed35-4487-a3f7-122efbbbc6ad/
-    image = "ocid1.image.oc1.eu-amsterdam-1.aaaaaaaahlpp6o3h3eqgyggmcf3rq5yiri7uw36f5f56hp5qktfxvt6kzesa"
+    # NB see https://docs.oracle.com/en-us/iaas/images/ubuntu-2204/
+    # NB see https://docs.oracle.com/en-us/iaas/images/image/674d0b41-aee8-4c0b-bf99-9e100d90f241/
+    image = "ocid1.image.oc1.eu-amsterdam-1.aaaaaaaauhjmohfaoe6upafoeqgflhsrcqpbn632ff5dy427oyimlv2g3kia"
   }
   # # VM.Standard.A1.Flex: 1-4 OCPU. 1-24 GB RAM.
   # # NB This shape is always free-eligible (up to 4 OCPU and 24 GB RAM).
@@ -62,11 +62,11 @@ variable "vm_type" {
   #   memory_in_gbs = 24
   #   boot_volume_size_gbs = 50 # NB min is 50.
   #   data_volume_size_gbs = 50 # NB min is 50.
-  #   # use Canonical-Ubuntu-20.04-aarch64-2021.09.22-0
+  #   # use Canonical-Ubuntu-22.04-Minimal-aarch64-2022.11.05-0
   #   # NB the image id depends on the region.
-  #   # NB see https://docs.oracle.com/en-us/iaas/images/ubuntu-2004/
-  #   # NB see https://docs.oracle.com/en-us/iaas/images/image/c186957d-5932-47ab-9060-8f7726f40da8/
-  #   image = "ocid1.image.oc1.eu-amsterdam-1.aaaaaaaaeyjxu6kaw5eko2erras3enzceixuenwvd7phw3cnfycf2sh4miba"
+  #   # NB see https://docs.oracle.com/en-us/iaas/images/ubuntu-2204/
+  #   # NB see https://docs.oracle.com/en-us/iaas/images/image/4025d18f-bd66-4bf6-833a-90b67ace0d7f/
+  #   image = "ocid1.image.oc1.eu-amsterdam-1.aaaaaaaacx35n5czcrq3yk65krkmwpxt36qitvfpkididysiuq7j6lde5c4q"
   # }
 }
 
