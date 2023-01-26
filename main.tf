@@ -1,5 +1,5 @@
 terraform {
-  required_version = "1.0.9"
+  required_version = "1.3.7"
   required_providers {
     # see https://registry.terraform.io/providers/hashicorp/template
     # see https://github.com/hashicorp/terraform-provider-template

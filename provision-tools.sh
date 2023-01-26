@@ -5,15 +5,15 @@ set -euxo pipefail
 sudo apt-get install -y unzip jq
 
 # install terraform.
-# see https://www.terraform.io/downloads.html
+# see https://developer.hashicorp.com/terraform/downloads
 case "$(dpkg --print-architecture)" in
     amd64)
-        artifact_url="https://releases.hashicorp.com/terraform/1.0.9/terraform_1.0.9_linux_amd64.zip"
-        artifact_sha=f06ac64c6a14ed6a923d255788e4a5daefa2b50e35f32d7a3b5a2f9a5a91e255
+        artifact_url="https://releases.hashicorp.com/terraform/1.3.7/terraform_1.3.7_linux_amd64.zip"
+        artifact_sha=b8cf184dee15dfa89713fe56085313ab23db22e17284a9a27c0999c67ce3021e
         ;;
     arm64)
-        artifact_url="https://releases.hashicorp.com/terraform/1.0.9/terraform_1.0.9_linux_arm64.zip"
-        artifact_sha=457ac590301126e7b151ea08c5b9586a882c60039a0605fb1e44b8d23d2624fd
+        artifact_url="https://releases.hashicorp.com/terraform/1.3.7/terraform_1.3.7_linux_arm64.zip"
+        artifact_sha=5b491c555ea8a62dda551675fd9f27d369f5cdbe87608d2a7367d3da2d38ea38
         ;;
     *)
         echo "ERROR: Unknow architecture $(dpkg --print-architecture)"
