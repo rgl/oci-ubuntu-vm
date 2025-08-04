@@ -8,12 +8,12 @@ sudo apt-get install -y unzip jq
 # see https://developer.hashicorp.com/terraform/downloads
 case "$(dpkg --print-architecture)" in
     amd64)
-        artifact_url="https://releases.hashicorp.com/terraform/1.3.7/terraform_1.3.7_linux_amd64.zip"
-        artifact_sha=b8cf184dee15dfa89713fe56085313ab23db22e17284a9a27c0999c67ce3021e
+        artifact_url="https://releases.hashicorp.com/terraform/1.12.2/terraform_1.12.2_linux_amd64.zip"
+        artifact_sha=1eaed12ca41fcfe094da3d76a7e9aa0639ad3409c43be0103ee9f5a1ff4b7437
         ;;
     arm64)
-        artifact_url="https://releases.hashicorp.com/terraform/1.3.7/terraform_1.3.7_linux_arm64.zip"
-        artifact_sha=5b491c555ea8a62dda551675fd9f27d369f5cdbe87608d2a7367d3da2d38ea38
+        artifact_url="https://releases.hashicorp.com/terraform/1.12.2/terraform_1.12.2_linux_arm64.zip"
+        artifact_sha=f8a0347dc5e68e6d60a9fa2db361762e7943ed084a773f28a981d988ceb6fdc9
         ;;
     *)
         echo "ERROR: Unknow architecture $(dpkg --print-architecture)"
