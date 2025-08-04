@@ -45,6 +45,7 @@ make terraform-init
 Launch the example:
 
 ```bash
+rm *.log
 make terraform-plan
 make terraform-apply
 ```
@@ -90,9 +91,24 @@ Connect to the VM and start a Debian LXC system container:
 
 ```bash
 ssh "ubuntu@$(terraform output -raw vm_ip_address)" # enter the VM.
+systemctl status
+networkctl status
+networkctl status --all --full
+cloud-init status --wait --long
+cat /var/log/cloud-init-output.log # show the cloud init logs.
+ip addr
+docker run --rm -it hello-world
+docker run --rm -i debian:12-slim <<'EOF'
+set -euxo pipefail
+exec 2>&1
+apt-get update
+apt-get install -y iproute2 iputils-ping procps
+ip addr
+ping -c 3 debian.org
+EOF
 snap list lxd # show the lxd package version.
 journalctl -u snap.lxd.daemon.service # show lxd logs.
-lxc launch images:debian/11 debian # start the container.
+lxc launch images:debian/12 debian # start the container.
 lxc exec debian -- bash # enter the container.
 lscpu
 # NB if the container does not obtain an IP address from lxd managed dnsmasq
@@ -101,6 +117,7 @@ lscpu
 #    lxd iptables rules are after the docker ones.
 #    NB we already workaround this by configuring cloud-init to reboot the
 #       system, so the above problem should not occur anymore.
+ip addr
 ping -c 3 debian.org
 exit # exit the container.
 lxc delete debian --force # destroy the container.

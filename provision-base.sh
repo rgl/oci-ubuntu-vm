@@ -42,7 +42,7 @@ EOF
 
 cat >~/.bash_history <<'EOF'
 lxc list
-lxc launch images:debian/11 debian
+lxc launch images:debian/12 debian
 lxc exec debian -- bash
 lxc delete debian --force
 EOF
