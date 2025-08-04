@@ -72,6 +72,8 @@ Connect to the VM serial console:
 ubuntu user password (by default it does not have a password; only ssh
 key login).
 
+**NB** to close the serial console ssh session you have to type `~.`.
+
 ```bash
 # NB the ssh command is alike:
 #       ssh -o ProxyCommand='ssh -W %h:%p -p 443 ocid1.instanceconsoleconnection.oc1.eu-amsterdam-1.<id1>@instance-console.eu-amsterdam-1.oci.oraclecloud.com' ocid1.instance.oc1.eu-amsterdam-1.<id2>
@@ -81,10 +83,14 @@ bash -c "$(terraform output -raw vm_serial_console_ssh_command)"
 You can also connect to the VNC console of the VM:
 
 ```bash
+# start the tunnel in foreground.
 # NB the ssh command is alike:
 #       ssh -o ProxyCommand='ssh -W %h:%p -p 443 ocid1.instanceconsoleconnection.oc1.eu-amsterdam-1.<id1>@instance-console.eu-amsterdam-1.oci.oraclecloud.com'-N -L localhost:5900:ocid1.instance.oc1.eu-amsterdam-1.<id2>:5900 ocid1.instance.oc1.eu-amsterdam-1.<id2>
-bash -c "$(terraform output -raw vm_vnc_console_ssh_command)" & # start the tunnel in background.
-vinagre localhost:5900 # open a VNC connection tru the local tunnel.
+bash -c "$(terraform output -raw vm_vnc_console_ssh_command)"
+# then, in another shell, open a VNC connection tru the tunnel, using one of the
+# following applications.
+remmina -c vnc://localhost:5900
+vinagre localhost:5900
 ```
 
 Connect to the VM and start a Debian LXC system container:

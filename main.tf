@@ -71,11 +71,29 @@ variable "vm_type" {
 }
 
 output "vm_serial_console_ssh_command" {
-  value = oci_core_instance_console_connection.example.connection_string
+  # NB this is required because oci serial console connection still uses the
+  #    deprecated ssh-rsa key type.
+  value = <<-EOF
+  ssh \
+    -o StrictHostKeyChecking=no \
+    -o UserKnownHostsFile=/dev/null \
+    -o HostKeyAlgorithms=+ssh-rsa \
+    -o PubkeyAcceptedKeyTypes=+ssh-rsa \
+    ${trimprefix(oci_core_instance_console_connection.example.connection_string, "ssh ")}
+  EOF
 }
 
 output "vm_vnc_console_ssh_command" {
-  value = oci_core_instance_console_connection.example.vnc_connection_string
+  # NB this is required because oci serial console connection still uses the
+  #    deprecated ssh-rsa key type.
+  value = <<-EOF
+  ssh \
+    -o StrictHostKeyChecking=no \
+    -o UserKnownHostsFile=/dev/null \
+    -o HostKeyAlgorithms=+ssh-rsa \
+    -o PubkeyAcceptedKeyTypes=+ssh-rsa \
+    ${trimprefix(oci_core_instance_console_connection.example.vnc_connection_string, "ssh ")}
+  EOF
 }
 
 output "vm_console_host_key_fingerprint" {
