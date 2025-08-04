@@ -273,6 +273,10 @@ resource "oci_core_instance" "example" {
     boot_volume_size_in_gbs = var.vm_type.boot_volume_size_gbs
   }
 
+  instance_options {
+    are_legacy_imds_endpoints_disabled = true
+  }
+
   metadata = {
     ssh_authorized_keys = var.ssh_public_key
     user_data = data.cloudinit_config.app.rendered
