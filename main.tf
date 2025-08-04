@@ -11,7 +11,7 @@ terraform {
     # see https://github.com/oracle/terraform-provider-oci
     oci = {
       source = "oracle/oci"
-      version = "4.104.2"
+      version = "7.12.0"
     }
   }
 }
@@ -91,11 +91,13 @@ output "vm_ip_address" {
 provider "oci" {
 }
 
+# see https://registry.terraform.io/providers/oracle/oci/latest/docs/data-sources/identity_availability_domain
 data "oci_identity_availability_domain" "example" {
   compartment_id = var.oci_tenancy_ocid
   ad_number = 1
 }
 
+# see https://registry.terraform.io/providers/oracle/oci/latest/docs/resources/identity_compartment
 resource "oci_identity_compartment" "example" {
   compartment_id = var.oci_tenancy_ocid
   name = var.compartment_name
@@ -103,7 +105,7 @@ resource "oci_identity_compartment" "example" {
   enable_delete = true
 }
 
-# see https://registry.terraform.io/providers/hashicorp/oci/latest/docs/resources/core_vcn
+# see https://registry.terraform.io/providers/oracle/oci/latest/docs/resources/core_vcn
 # see Requirements for DNS Labels and Hostnames at https://docs.oracle.com/en-us/iaas/Content/Network/Concepts/dns.htm
 resource "oci_core_vcn" "example" {
   compartment_id = oci_identity_compartment.example.id
@@ -112,7 +114,7 @@ resource "oci_core_vcn" "example" {
   dns_label = "example"
 }
 
-# see https://registry.terraform.io/providers/hashicorp/oci/latest/docs/resources/core_subnet
+# see https://registry.terraform.io/providers/oracle/oci/latest/docs/resources/core_subnet
 # see Requirements for DNS Labels and Hostnames at https://docs.oracle.com/en-us/iaas/Content/Network/Concepts/dns.htm
 resource "oci_core_subnet" "example" {
   compartment_id = oci_identity_compartment.example.id
@@ -125,7 +127,7 @@ resource "oci_core_subnet" "example" {
   dhcp_options_id = oci_core_vcn.example.default_dhcp_options_id
 }
 
-# see https://registry.terraform.io/providers/hashicorp/oci/latest/docs/resources/core_route_table
+# see https://registry.terraform.io/providers/oracle/oci/latest/docs/resources/core_route_table
 resource "oci_core_default_route_table" "example" {
   manage_default_resource_id = oci_core_vcn.example.default_route_table_id
   route_rules {
@@ -135,7 +137,7 @@ resource "oci_core_default_route_table" "example" {
   }
 }
 
-# see https://registry.terraform.io/providers/hashicorp/oci/latest/docs/resources/core_security_list
+# see https://registry.terraform.io/providers/oracle/oci/latest/docs/resources/core_security_list
 resource "oci_core_default_security_list" "example" {
   manage_default_resource_id = oci_core_vcn.example.default_security_list_id
   ingress_security_rules {
@@ -179,7 +181,7 @@ resource "oci_core_default_security_list" "example" {
   }
 }
 
-# see https://registry.terraform.io/providers/hashicorp/oci/latest/docs/resources/core_internet_gateway
+# see https://registry.terraform.io/providers/oracle/oci/latest/docs/resources/core_internet_gateway
 resource "oci_core_internet_gateway" "example" {
   compartment_id = oci_identity_compartment.example.id
   vcn_id = oci_core_vcn.example.id
@@ -227,7 +229,7 @@ data "cloudinit_config" "app" {
   }
 }
 
-# see https://registry.terraform.io/providers/hashicorp/oci/latest/docs/resources/core_volume
+# see https://registry.terraform.io/providers/oracle/oci/latest/docs/resources/core_volume
 resource "oci_core_volume" "example" {
   compartment_id = oci_core_instance.example.compartment_id
   availability_domain = oci_core_instance.example.availability_domain
@@ -235,7 +237,7 @@ resource "oci_core_volume" "example" {
   display_name = "data"
 }
 
-# see https://registry.terraform.io/providers/hashicorp/oci/latest/docs/resources/core_volume_attachment
+# see https://registry.terraform.io/providers/oracle/oci/latest/docs/resources/core_volume_attachment
 # see Connecting to Volumes With Consistent Device Paths at https://docs.oracle.com/en-us/iaas/Content/Block/References/consistentdevicepaths.htm
 resource "oci_core_volume_attachment" "example" {
   attachment_type = "paravirtualized"
@@ -244,9 +246,9 @@ resource "oci_core_volume_attachment" "example" {
   device = "/dev/oracleoci/oraclevdb"
 }
 
-# see https://registry.terraform.io/providers/hashicorp/oci/latest/docs/resources/core_instance
+# see https://registry.terraform.io/providers/oracle/oci/latest/docs/resources/core_instance
 # NB cloud-init uses the https://cloudinit.readthedocs.io/en/latest/topics/datasources/oracle.html datasource.
-#    see https://github.com/canonical/cloud-init/blob/612e39087aee3b1242765e7c4f463f54a6ebd723/cloudinit/sources/DataSourceOracle.py
+#    see https://github.com/canonical/cloud-init/blob/ubuntu/jammy/cloudinit/sources/DataSourceOracle.py
 resource "oci_core_instance" "example" {
   compartment_id = oci_identity_compartment.example.id
   availability_domain = data.oci_identity_availability_domain.example.name
@@ -278,7 +280,7 @@ resource "oci_core_instance" "example" {
 }
 
 # see https://docs.oracle.com/en-us/iaas/Content/Compute/References/serialconsole.htm
-# see https://registry.terraform.io/providers/hashicorp/oci/latest/docs/resources/core_instance_console_connection
+# see https://registry.terraform.io/providers/oracle/oci/latest/docs/resources/core_instance_console_connection
 resource "oci_core_instance_console_connection" "example" {
   instance_id = oci_core_instance.example.id
   public_key = var.ssh_public_key
