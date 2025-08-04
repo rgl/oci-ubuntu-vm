@@ -1,11 +1,11 @@
 terraform {
   required_version = "1.12.2"
   required_providers {
-    # see https://registry.terraform.io/providers/hashicorp/template
-    # see https://github.com/hashicorp/terraform-provider-template
-    template = {
-      source = "hashicorp/template"
-      version = "2.2.0"
+    # see https://registry.terraform.io/providers/hashicorp/cloudinit
+    # see https://github.com/hashicorp/terraform-provider-cloudinit
+    cloudinit = {
+      source = "hashicorp/cloudinit"
+      version = "2.3.7"
     }
     # see https://registry.terraform.io/providers/oracle/oci
     # see https://github.com/oracle/terraform-provider-oci
@@ -186,9 +186,10 @@ resource "oci_core_internet_gateway" "example" {
   display_name = "example"
 }
 
+# see https://registry.terraform.io/providers/hashicorp/cloudinit/latest/docs/data-sources/config
 # NB cloud-init executes **all** these parts regardless of their result. they
 #    should be idempotent.
-data "template_cloudinit_config" "app" {
+data "cloudinit_config" "app" {
   part {
     content_type = "text/cloud-config"
     content = <<-EOF
@@ -272,7 +273,7 @@ resource "oci_core_instance" "example" {
 
   metadata = {
     ssh_authorized_keys = var.ssh_public_key
-    user_data = data.template_cloudinit_config.app.rendered
+    user_data = data.cloudinit_config.app.rendered
   }
 }
 
