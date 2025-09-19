@@ -1,5 +1,5 @@
 terraform {
-  required_version = "1.12.2"
+  required_version = "1.13.3"
   required_providers {
     # see https://registry.terraform.io/providers/hashicorp/cloudinit
     # see https://github.com/hashicorp/terraform-provider-cloudinit
