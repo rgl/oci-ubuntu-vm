@@ -21,13 +21,13 @@ case "$(dpkg --print-architecture)" in
         ;;
 esac
 artifact_path="/tmp/$(basename $artifact_url)"
-wget -qO $artifact_path $artifact_url
-if [ "$(sha256sum $artifact_path | awk '{print $1}')" != "$artifact_sha" ]; then
+wget -qO "$artifact_path" "$artifact_url"
+if [ "$(sha256sum "$artifact_path" | awk '{print $1}')" != "$artifact_sha" ]; then
     echo "ERROR: Downloaded $artifact_url failed the checksum verification"
     exit 1
 fi
-sudo unzip -o $artifact_path -d /usr/local/bin
-rm $artifact_path
+sudo unzip -o "$artifact_path" -d /usr/local/bin
+rm "$artifact_path"
 CHECKPOINT_DISABLE=1 terraform version
 
 # install oci-cli.
