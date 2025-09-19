@@ -99,6 +99,9 @@ Connect to the VM and start a Debian LXC system container:
 
 ```bash
 ssh "ubuntu@$(terraform output -raw vm_ip_address)" # enter the VM.
+timedatectl status
+timedatectl show-timesync
+timedatectl timesync-status
 systemctl status
 networkctl status
 networkctl status --all --full
