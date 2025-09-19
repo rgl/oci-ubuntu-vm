@@ -12,7 +12,8 @@ name = sys.argv[1]
 if name == 'user':
     import base64
     import json
-    # see https://github.com/oracle/oci-cli/blob/14da7aac297eb6000eaf2dc6c5c10dc837d15171/src/oci_cli/cli_setup_bootstrap.py#L192-L195
+
+    # see https://github.com/oracle/oci-cli/blob/14da7aac297eb6000eaf2dc6c5c10dc837d15171/src/oci_cli/cli_setup_bootstrap.py#L192-L195 # noqa: E501
     path = config['DEFAULT']['security_token_file']
     parts = open(path).read().split('.')
     payload = json.loads(base64.b64decode(parts[1] + ('=' * (4 - len(parts[1]) % 4))))

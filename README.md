@@ -121,6 +121,12 @@ Destroy everything:
 make terraform-destroy
 ```
 
+Lint the code:
+
+```bash
+./mega-linter.sh
+```
+
 List this repository dependencies (and which have newer versions):
 
 ```bash
