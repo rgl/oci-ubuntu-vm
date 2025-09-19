@@ -4,13 +4,13 @@ terraform {
     # see https://registry.terraform.io/providers/hashicorp/cloudinit
     # see https://github.com/hashicorp/terraform-provider-cloudinit
     cloudinit = {
-      source = "hashicorp/cloudinit"
+      source  = "hashicorp/cloudinit"
       version = "2.3.7"
     }
     # see https://registry.terraform.io/providers/oracle/oci
     # see https://github.com/oracle/terraform-provider-oci
     oci = {
-      source = "oracle/oci"
+      source  = "oracle/oci"
       version = "7.12.0"
     }
   }
@@ -33,19 +33,19 @@ variable "ssh_public_key" {
 # see https://docs.oracle.com/en-us/iaas/Content/Compute/References/computeshapes.htm
 variable "vm_type" {
   type = object({
-    shape = string
-    ocpus = number
-    memory_in_gbs = number
+    shape                = string
+    ocpus                = number
+    memory_in_gbs        = number
     boot_volume_size_gbs = number
     data_volume_size_gbs = number
-    image = string
+    image                = string
   })
   # VM.Standard.E2.1.Micro: 1 OCPU. 1 GB RAM.
   # NB This shape is always free-eligible.
   default = {
-    shape = "VM.Standard.E2.1.Micro"
-    ocpus = 1
-    memory_in_gbs = 1
+    shape                = "VM.Standard.E2.1.Micro"
+    ocpus                = 1
+    memory_in_gbs        = 1
     boot_volume_size_gbs = 50 # NB min is 50.
     data_volume_size_gbs = 50 # NB min is 50.
     # use Canonical-Ubuntu-22.04-Minimal-2025.05.20-0
@@ -112,45 +112,45 @@ provider "oci" {
 # see https://registry.terraform.io/providers/oracle/oci/latest/docs/data-sources/identity_availability_domain
 data "oci_identity_availability_domain" "example" {
   compartment_id = var.oci_tenancy_ocid
-  ad_number = 1
+  ad_number      = 1
 }
 
 # see https://registry.terraform.io/providers/oracle/oci/latest/docs/resources/identity_compartment
 resource "oci_identity_compartment" "example" {
   compartment_id = var.oci_tenancy_ocid
-  name = var.compartment_name
-  description = "example"
-  enable_delete = true
+  name           = var.compartment_name
+  description    = "example"
+  enable_delete  = true
 }
 
 # see https://registry.terraform.io/providers/oracle/oci/latest/docs/resources/core_vcn
 # see Requirements for DNS Labels and Hostnames at https://docs.oracle.com/en-us/iaas/Content/Network/Concepts/dns.htm
 resource "oci_core_vcn" "example" {
   compartment_id = oci_identity_compartment.example.id
-  cidr_block = "10.1.0.0/16"
-  display_name = "example net"
-  dns_label = "example"
+  cidr_block     = "10.1.0.0/16"
+  display_name   = "example net"
+  dns_label      = "example"
 }
 
 # see https://registry.terraform.io/providers/oracle/oci/latest/docs/resources/core_subnet
 # see Requirements for DNS Labels and Hostnames at https://docs.oracle.com/en-us/iaas/Content/Network/Concepts/dns.htm
 resource "oci_core_subnet" "example" {
-  compartment_id = oci_identity_compartment.example.id
-  vcn_id = oci_core_vcn.example.id
-  cidr_block = "10.1.2.0/24"
-  display_name = "example subnet"
-  dns_label = "subnet1"
+  compartment_id    = oci_identity_compartment.example.id
+  vcn_id            = oci_core_vcn.example.id
+  cidr_block        = "10.1.2.0/24"
+  display_name      = "example subnet"
+  dns_label         = "subnet1"
   security_list_ids = [oci_core_vcn.example.default_security_list_id]
-  route_table_id = oci_core_vcn.example.default_route_table_id
-  dhcp_options_id = oci_core_vcn.example.default_dhcp_options_id
+  route_table_id    = oci_core_vcn.example.default_route_table_id
+  dhcp_options_id   = oci_core_vcn.example.default_dhcp_options_id
 }
 
 # see https://registry.terraform.io/providers/oracle/oci/latest/docs/resources/core_route_table
 resource "oci_core_default_route_table" "example" {
   manage_default_resource_id = oci_core_vcn.example.default_route_table_id
   route_rules {
-    destination = "0.0.0.0/0"
-    destination_type = "CIDR_BLOCK"
+    destination       = "0.0.0.0/0"
+    destination_type  = "CIDR_BLOCK"
     network_entity_id = oci_core_internet_gateway.example.id
   }
 }
@@ -160,8 +160,8 @@ resource "oci_core_default_security_list" "example" {
   manage_default_resource_id = oci_core_vcn.example.default_security_list_id
   ingress_security_rules {
     description = "ICMP"
-    protocol = "1" # ICMP
-    source = "0.0.0.0/0"
+    protocol    = "1" # ICMP
+    source      = "0.0.0.0/0"
     icmp_options {
       type = 3 # Destination Unreachable
       code = 4 # Fragmentation Needed and Don't Fragment was Set
@@ -169,16 +169,16 @@ resource "oci_core_default_security_list" "example" {
   }
   ingress_security_rules {
     description = "ICMP (from our VCN)"
-    protocol = "1" # ICMP
-    source = oci_core_vcn.example.cidr_block
+    protocol    = "1" # ICMP
+    source      = oci_core_vcn.example.cidr_block
     icmp_options {
       type = 3 # Destination Unreachable
     }
   }
   ingress_security_rules {
     description = "SSH"
-    protocol = "6" # TCP
-    source = "0.0.0.0/0"
+    protocol    = "6" # TCP
+    source      = "0.0.0.0/0"
     tcp_options {
       min = 22
       max = 22
@@ -186,8 +186,8 @@ resource "oci_core_default_security_list" "example" {
   }
   ingress_security_rules {
     description = "HTTP"
-    protocol = "6" # TCP
-    source = "0.0.0.0/0"
+    protocol    = "6" # TCP
+    source      = "0.0.0.0/0"
     tcp_options {
       min = 80
       max = 80
@@ -195,15 +195,15 @@ resource "oci_core_default_security_list" "example" {
   }
   egress_security_rules {
     destination = "0.0.0.0/0"
-    protocol = "all"
+    protocol    = "all"
   }
 }
 
 # see https://registry.terraform.io/providers/oracle/oci/latest/docs/resources/core_internet_gateway
 resource "oci_core_internet_gateway" "example" {
   compartment_id = oci_identity_compartment.example.id
-  vcn_id = oci_core_vcn.example.id
-  display_name = "example"
+  vcn_id         = oci_core_vcn.example.id
+  display_name   = "example"
 }
 
 # see https://registry.terraform.io/providers/hashicorp/cloudinit/latest/docs/data-sources/config
@@ -212,7 +212,7 @@ resource "oci_core_internet_gateway" "example" {
 data "cloudinit_config" "app" {
   part {
     content_type = "text/cloud-config"
-    content = <<-EOF
+    content      = <<-EOF
     #cloud-config
     package_update: true
     package_upgrade: true
@@ -221,63 +221,63 @@ data "cloudinit_config" "app" {
   }
   part {
     content_type = "text/x-shellscript"
-    content = file("provision-base.sh")
+    content      = file("provision-base.sh")
   }
   part {
     content_type = "text/x-shellscript"
-    content = file("provision-docker.sh")
+    content      = file("provision-docker.sh")
   }
   part {
     content_type = "text/x-shellscript"
-    content = file("provision-docker-compose.sh")
+    content      = file("provision-docker-compose.sh")
   }
   part {
     content_type = "text/x-shellscript"
-    content = file("provision-app.sh")
+    content      = file("provision-app.sh")
   }
 }
 
 # see https://registry.terraform.io/providers/oracle/oci/latest/docs/resources/core_volume
 resource "oci_core_volume" "example" {
-  compartment_id = oci_core_instance.example.compartment_id
+  compartment_id      = oci_core_instance.example.compartment_id
   availability_domain = oci_core_instance.example.availability_domain
-  size_in_gbs = var.vm_type.data_volume_size_gbs
-  display_name = "data"
+  size_in_gbs         = var.vm_type.data_volume_size_gbs
+  display_name        = "data"
 }
 
 # see https://registry.terraform.io/providers/oracle/oci/latest/docs/resources/core_volume_attachment
 # see Connecting to Volumes With Consistent Device Paths at https://docs.oracle.com/en-us/iaas/Content/Block/References/consistentdevicepaths.htm
 resource "oci_core_volume_attachment" "example" {
   attachment_type = "paravirtualized"
-  instance_id = oci_core_instance.example.id
-  volume_id = oci_core_volume.example.id
-  device = "/dev/oracleoci/oraclevdb"
+  instance_id     = oci_core_instance.example.id
+  volume_id       = oci_core_volume.example.id
+  device          = "/dev/oracleoci/oraclevdb"
 }
 
 # see https://registry.terraform.io/providers/oracle/oci/latest/docs/resources/core_instance
 # NB cloud-init uses the https://cloudinit.readthedocs.io/en/latest/topics/datasources/oracle.html datasource.
 #    see https://github.com/canonical/cloud-init/blob/ubuntu/jammy/cloudinit/sources/DataSourceOracle.py
 resource "oci_core_instance" "example" {
-  compartment_id = oci_identity_compartment.example.id
+  compartment_id      = oci_identity_compartment.example.id
   availability_domain = data.oci_identity_availability_domain.example.name
-  display_name = "example"
+  display_name        = "example"
 
   shape = var.vm_type.shape
   shape_config {
-    ocpus = var.vm_type.ocpus
+    ocpus         = var.vm_type.ocpus
     memory_in_gbs = var.vm_type.memory_in_gbs
   }
 
   create_vnic_details {
-    subnet_id = oci_core_subnet.example.id
-    display_name = "primary"
-    hostname_label = "example"
+    subnet_id        = oci_core_subnet.example.id
+    display_name     = "primary"
+    hostname_label   = "example"
     assign_public_ip = true
   }
 
   source_details {
-    source_type = "image"
-    source_id = var.vm_type.image
+    source_type             = "image"
+    source_id               = var.vm_type.image
     boot_volume_size_in_gbs = var.vm_type.boot_volume_size_gbs
   }
 
@@ -287,7 +287,7 @@ resource "oci_core_instance" "example" {
 
   metadata = {
     ssh_authorized_keys = var.ssh_public_key
-    user_data = data.cloudinit_config.app.rendered
+    user_data           = data.cloudinit_config.app.rendered
   }
 }
 
@@ -295,5 +295,5 @@ resource "oci_core_instance" "example" {
 # see https://registry.terraform.io/providers/oracle/oci/latest/docs/resources/core_instance_console_connection
 resource "oci_core_instance_console_connection" "example" {
   instance_id = oci_core_instance.example.id
-  public_key = var.ssh_public_key
+  public_key  = var.ssh_public_key
 }
