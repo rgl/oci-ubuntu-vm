@@ -41,10 +41,7 @@ set completion-ignore-case on
 EOF
 
 cat >~/.bash_history <<'EOF'
-lxc list
-lxc launch images:debian/12 debian
-lxc exec debian -- bash
-lxc delete debian --force
+docker run --rm -it debian:12-slim
 EOF
 
 # configure the ubuntu user home.

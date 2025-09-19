@@ -112,21 +112,6 @@ apt-get install -y iproute2 iputils-ping procps
 ip addr
 ping -c 3 debian.org
 EOF
-snap list lxd # show the lxd package version.
-journalctl -u snap.lxd.daemon.service # show lxd logs.
-lxc launch images:debian/12 debian # start the container.
-lxc exec debian -- bash # enter the container.
-lscpu
-# NB if the container does not obtain an IP address from lxd managed dnsmasq
-#    DHCP server, try to reboot the host. it seems lxd/docker iptables rules
-#    are racing/conflicting with each other. it generally fubars when the
-#    lxd iptables rules are after the docker ones.
-#    NB we already workaround this by configuring cloud-init to reboot the
-#       system, so the above problem should not occur anymore.
-ip addr
-ping -c 3 debian.org
-exit # exit the container.
-lxc delete debian --force # destroy the container.
 exit # exit the VM.
 ```
 
