@@ -18,16 +18,20 @@ terraform {
 
 # oci provider settings.
 # NB the Makefile sets this from your current oci-cli session.
-variable "oci_tenancy_ocid" {}
+variable "oci_tenancy_ocid" {
+  type = string
+}
 
 # the compartment name that will be created inside the oci_tenancy_ocid root.
 variable "compartment_name" {
+  type    = string
   default = "rgl-ubuntu-vm-example"
 }
 
 # NB when you run make terraform-apply this is set from the TF_VAR_ssh_public_key
 #    environment variable, which comes from the ~/.ssh/id_rsa.pub file.
 variable "ssh_public_key" {
+  type = string
 }
 
 # see https://docs.oracle.com/en-us/iaas/Content/Compute/References/computeshapes.htm
