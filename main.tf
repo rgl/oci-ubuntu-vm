@@ -11,7 +11,7 @@ terraform {
     # see https://github.com/oracle/terraform-provider-oci
     oci = {
       source  = "oracle/oci"
-      version = "7.12.0"
+      version = "7.19.0"
     }
   }
 }
