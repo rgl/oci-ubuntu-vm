@@ -41,7 +41,7 @@ set completion-ignore-case on
 EOF
 
 cat >~/.bash_history <<'EOF'
-docker run --rm -it debian:12-slim
+docker run --rm -it debian:13-slim
 EOF
 
 # configure the ubuntu user home.

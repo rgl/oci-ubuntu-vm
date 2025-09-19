@@ -106,7 +106,7 @@ cloud-init status --wait --long
 cat /var/log/cloud-init-output.log # show the cloud init logs.
 ip addr
 docker run --rm -it hello-world
-docker run --rm -i debian:12-slim <<'EOF'
+docker run --rm -i debian:13-slim <<'EOF'
 set -euxo pipefail
 exec 2>&1
 apt-get update
