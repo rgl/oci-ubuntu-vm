@@ -120,3 +120,9 @@ Destroy everything:
 ```bash
 make terraform-destroy
 ```
+
+List this repository dependencies (and which have newer versions):
+
+```bash
+GITHUB_COM_TOKEN='YOUR_GITHUB_PERSONAL_TOKEN' ./renovate.sh
+```

@@ -2,6 +2,7 @@
 .terraform.tfstate*
 terraform.tfstate*
 .vagrant/
+tmp/
 shared/
 secrets.*
 SECRETS.*
