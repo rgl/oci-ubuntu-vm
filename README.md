@@ -1,8 +1,10 @@
+# About
+
 An example Ubuntu virtual machine running in the Oracle Cloud Infrastructure (OCI) cloud.
 
 For a similar example running in Azure see the [rgl/azure-ubuntu-vm](https://github.com/rgl/azure-ubuntu-vm) repository.
 
-# Usage (on a Ubuntu Desktop)
+## Usage (on a Ubuntu Desktop)
 
 Install the tools:
 
